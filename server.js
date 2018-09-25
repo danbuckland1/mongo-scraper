@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 // Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/week18Populater", { useNewUrlParser: true });
+mongoose.connect("mongodb://localhost/overheard", { useNewUrlParser: true });
 
 // Routes
 
