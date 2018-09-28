@@ -3,6 +3,7 @@ var bodyParser = require("body-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
 var exphbs  = require('express-handlebars');
+var axios = require('axios');
 
 // Our scraping tools
 // Axios is a promised-based http library, similar to jQuery's Ajax method
@@ -25,6 +26,9 @@ app.use(logger("dev"));
 app.use(bodyParser.urlencoded({ extended: true }));
 // Use express.static to serve the public folder as a static directory
 app.use(express.static("public"));
+
+app.engine("handlebars", exphbs({defaultLayout: "main"}));
+app.set("view engine", "handlebars");
 
 // Connect to the Mongo DB
 mongoose.connect("mongodb://localhost/overheard", { useNewUrlParser: true });
@@ -117,6 +121,10 @@ app.post("/articles/:id", function(req, res) {
       res.json(err);
     });
 });
+
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/overheard";
+
+mongoose.connect(MONGODB_URI);
 
 // Start the server
 app.listen(PORT, function() {
